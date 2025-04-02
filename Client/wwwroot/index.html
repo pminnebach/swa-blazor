@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="Client.styles.css" rel="stylesheet" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#03173d" />
 </head>
 
 <body>
@@ -27,6 +29,17 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => {
+                    console.log('Service worker registered successfully', reg);
+                })
+                .catch(err => {
+                    console.error('Service worker registration failed:', err);
+                });
+        }
+    </script>
 </body>
 
 </html>

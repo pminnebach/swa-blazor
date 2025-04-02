@@ -104,8 +104,7 @@
     {
         try
         {
-            using var httpClient = new HttpClient();
-            var response = await httpClient.PostAsJsonAsync("/api/AddTimeRegistration", registration);
+            var response = await Http.PostAsJsonAsync("/api/AddTimeRegistration", registration);
 
             if (response.IsSuccessStatusCode)
             {

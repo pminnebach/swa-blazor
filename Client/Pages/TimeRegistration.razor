@@ -1,0 +1,125 @@
+@page "/timeregistration"
+
+<h3>Time Registration</h3>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="d-flex flex-wrap justify-content-around">
+            <button class="btn btn-primary m-2" @onclick="CheckIn">Check In</button>
+            <button class="btn btn-danger m-2" @onclick="CheckOut">Check Out</button>
+            <button class="btn btn-success m-2" @onclick="StartBreak">Start Break</button>
+            <button class="btn btn-warning m-2" @onclick="EndBreak">End Break</button>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    @if (!string.IsNullOrEmpty(statusMessage))
+    {
+        <div class="alert @statusClass" role="alert">
+            @statusMessage
+        </div>
+    }
+</div>
+
+@code {
+    private string statusMessage = "";
+    private string statusClass = "alert-info";
+
+    private async Task CheckIn()
+    {
+        var registration = new BlazorApp.Shared.TimeRegistration
+        {
+            Id = Guid.NewGuid(),
+            Date = DateTime.Today,
+            Time = DateTime.Now,
+            RegistrationType = "CheckIn",
+            Name = "User", // This would come from authentication in a real app
+            Company = "Company" // This would be configured or from user profile
+        };
+
+        statusMessage = "Checking in...";
+        statusClass = "alert-info";
+
+        await SaveTimeRegistration(registration);
+    }
+
+    private async Task CheckOut()
+    {
+        var registration = new BlazorApp.Shared.TimeRegistration
+        {
+            Id = Guid.NewGuid(),
+            Date = DateTime.Today,
+            Time = DateTime.Now,
+            RegistrationType = "CheckOut",
+            Name = "User", // This would come from authentication in a real app
+            Company = "Company" // This would be configured or from user profile
+        };
+
+        statusMessage = "Checking out...";
+        statusClass = "alert-info";
+
+        await SaveTimeRegistration(registration);
+    }
+
+    private async Task StartBreak()
+    {
+        var registration = new BlazorApp.Shared.TimeRegistration
+        {
+            Id = Guid.NewGuid(),
+            Date = DateTime.Today,
+            Time = DateTime.Now,
+            RegistrationType = "StartBreak",
+            Name = "User", // This would come from authentication in a real app
+            Company = "Company" // This would be configured or from user profile
+        };
+
+        statusMessage = "Starting break...";
+        statusClass = "alert-info";
+
+        await SaveTimeRegistration(registration);
+    }
+
+    private async Task EndBreak()
+    {
+        var registration = new BlazorApp.Shared.TimeRegistration
+        {
+            Id = Guid.NewGuid(),
+            Date = DateTime.Today,
+            Time = DateTime.Now,
+            RegistrationType = "EndBreak",
+            Name = "User", // This would come from authentication in a real app
+            Company = "Company" // This would be configured or from user profile
+        };
+
+        statusMessage = "Ending break...";
+        statusClass = "alert-info";
+
+        await SaveTimeRegistration(registration);
+    }
+
+    private async Task SaveTimeRegistration(BlazorApp.Shared.TimeRegistration registration)
+    {
+        try
+        {
+            using var httpClient = new HttpClient();
+            var response = await httpClient.PostAsJsonAsync("api/AddTimeRegistration", registration);
+
+            if (response.IsSuccessStatusCode)
+            {
+                statusMessage = $"Successfully registered: {registration.RegistrationType}";
+                statusClass = "alert-success";
+            }
+            else
+            {
+                statusMessage = $"Error: {response.StatusCode}";
+                statusClass = "alert-danger";
+            }
+        }
+        catch (Exception ex)
+        {
+            statusMessage = $"Error: {ex.Message}";
+            statusClass = "alert-danger";
+        }
+    }
+} 

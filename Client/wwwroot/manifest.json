@@ -1,6 +1,6 @@
 {
-  "name": "Azure Static Web Apps Blazor Sample",
-  "short_name": "Blazor PWA",
+  "name": "Time Registration Application",
+  "short_name": "TimeRegistration",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

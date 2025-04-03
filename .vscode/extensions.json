@@ -4,6 +4,8 @@
     "ms-dotnettools.csharp",
     "azurite.azurite",
     "ms-dotnettools.vscode-dotnet-runtime",
-    "github.vscode-github-actions"
+    "github.vscode-github-actions",
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.vscodeintellicode-csharp"
   ]
 }
